@@ -2,10 +2,12 @@
    
 %{   
    /* write your C code here for definitions of variables and including headers */
-	int currLine = 1;, currPos = 1;
+	int currLine = 1, currPos = 1;
 %}
 
    /* some common rules */
+
+DIGIT [0-9]
 
 %%
    /* specific lexer rules in regex */
