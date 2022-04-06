@@ -39,7 +39,7 @@ DIGIT [0-9]
 "<"  {printf("LT\n"); currPos += yyleng; }
 
     /*identifiers & numbers*/
-([a-z]+[A-Z]*)*?([_][0-9])*)  {printf("IDENT %s", yytext); currPos += yyleng; }
+([a-z]|[A-Z])+([_]?[0-9]?[a-z]?[A-Z]?)*  {printf("IDENT %s", yytext); currPos += yyleng; }
 
     /*other special symbols*/
 ";" {printf("SEMICOLON"); currPos += yyleng; }
