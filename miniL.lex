@@ -37,12 +37,7 @@ DIGIT [0-9]
 "==" {printf("EQ\n"); currPos += yyleng; }
 "<>" {printf("NEQ\n"); currPos += yyleng; }
 "<"  {printf("LT\n"); currPos += yyleng; }
-
-    /*identifiers & numbers*/
-    /*([a-z]|[A-Z])+([_]?[0-9]?[a-z]?[A-Z]?)*  {printf("IDENT %s\n", yytext); currPos += yyleng; }*/
-
-(##).* { /*ignore comments*/  currPos += yyleng;}
-    
+   
     /*other special symbols*/
 ";" {printf("SEMICOLON"); currPos += yyleng; }
 ":" {printf("COLON"); currPos += yyleng; }
@@ -52,6 +47,8 @@ DIGIT [0-9]
 [\t]+ {/*ignore spaces*/ currPos += yyleng; }
 
 "\n" {currLine++; currPos = 1;}
+
+(##).* {/*ignore comments*/ currPos += yyleng;}
 
     /*Error type 2: Invalid Identifier*/
 [0-9_].* {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
