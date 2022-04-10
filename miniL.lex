@@ -39,13 +39,29 @@ DIGIT [0-9]
 "<"  {printf("LT\n"); currPos += yyleng; }
 
     /*identifiers & numbers*/
-([a-z]|[A-Z])+([_]?[0-9]?[a-z]?[A-Z]?)*  {printf("IDENT %s", yytext); currPos += yyleng; }
+    /*([a-z]|[A-Z])+([_]?[0-9]?[a-z]?[A-Z]?)*  {printf("IDENT %s\n", yytext); currPos += yyleng; }*/
 
+(##).* { /*ignore comments*/  currPos += yyleng;}
+    
     /*other special symbols*/
 ";" {printf("SEMICOLON"); currPos += yyleng; }
 ":" {printf("COLON"); currPos += yyleng; }
 "," {printf("COMMA"); currPos += yyleng; }
 "(" {printf("L_PAREN"); currPos += yyleng; }
+
+[\t]+ {/*ignore spaces*/ currPos += yyleng; }
+
+"\n" {currLine++; currPos = 1;}
+
+    /*Error type 2: Invalid Identifier*/
+[0-9_].* {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
+([a-z]|[A-Z])+([_]?[0-9]?[a-z]?[A-Z]?)*[_]+ {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
+
+    /*identifiers & numbers*/
+([a-z]|[A-Z])+([_]?[0-9]?[a-z]?[A-Z]?)*  {printf("IDENT %s\n", yytext); currPos += yyleng; }
+  
+    /*Error type 1: Unrecognized Symbol*/
+. {printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext); exit(0);} 
 
 %%
 	/* C functions used in lexer */
