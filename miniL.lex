@@ -68,6 +68,7 @@ DIGIT [0-9]
 ":="		{printf("ASSIGN\n"); currPos += yyleng;}
 "\n" {currLine++; currPos = 1;}
 
+" " {currPos += yyleng;}
 [\t]+ {/*ignore spaces*/ currPos += yyleng; }
 
 {DIGIT}+	{printf("NUMBER %s\n", yytext); currPos += yyleng;}
@@ -89,5 +90,14 @@ DIGIT [0-9]
 
 int main(int argc, char ** argv)
 {
-   yylex();
+	if(argc >= 2){
+		yyin = fopen(argv[1], "r");
+		if(yyin == NULL){
+			yyin = stdin;
+		}
+	}
+	else{
+		yyin = stdin;
+	}
+	yylex();
 }
