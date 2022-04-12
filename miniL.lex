@@ -68,8 +68,7 @@ DIGIT [0-9]
 ":="		{printf("ASSIGN\n"); currPos += yyleng;}
 "\n" {currLine++; currPos = 1;}
 
-" " {currPos += yyleng;}
-[\t]+ {/*ignore spaces*/ currPos += yyleng; }
+[ \t]+ {/*ignore spaces*/ currPos += yyleng; }
 
 {DIGIT}+	{printf("NUMBER %s\n", yytext); currPos += yyleng;}
 
