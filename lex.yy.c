@@ -396,7 +396,7 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    4,    1,    5,    1,    1,    6,
+        1,    2,    1,    1,    4,    1,    5,    1,    1,    6,
         7,    8,    9,   10,   11,    1,   12,   13,   13,   13,
        13,   13,   13,   13,   13,   13,   13,   14,   15,   16,
        17,   18,    1,    1,   19,   19,   19,   19,   19,   19,
@@ -1083,22 +1083,22 @@ YY_RULE_SETUP
 case 41:
 YY_RULE_SETUP
 #line 61 "miniL.lex"
-{printf("SEMICOLON"); currPos += yyleng; }
+{printf("SEMICOLON\n"); currPos += yyleng; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 62 "miniL.lex"
-{printf("COLON"); currPos += yyleng; }
+{printf("COLON\n"); currPos += yyleng; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 63 "miniL.lex"
-{printf("COMMA"); currPos += yyleng; }
+{printf("COMMA\n"); currPos += yyleng; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
 #line 64 "miniL.lex"
-{printf("L_PAREN"); currPos += yyleng; }
+{printf("L_PAREN\n"); currPos += yyleng; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
@@ -1134,7 +1134,7 @@ YY_RULE_SETUP
 case 51:
 YY_RULE_SETUP
 #line 73 "miniL.lex"
-{printf("NUMBER %s", yytext); currPos += yyleng;}
+{printf("NUMBER %s\n", yytext); currPos += yyleng;}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
@@ -2170,6 +2170,15 @@ void yyfree (void * ptr )
 
 int main(int argc, char ** argv)
 {
-   yylex();
+	if(argc >= 2){
+		yyin = fopen(argv[1], "r");
+		if(yyin == NULL){
+			yyin = stdin;
+		}
+	}
+	else{
+		yyin = stdin;
+	}
+	yylex();
 }
 
