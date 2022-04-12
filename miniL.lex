@@ -58,10 +58,10 @@ DIGIT [0-9]
 ">="		{printf("GTE\n"); currPos += yyleng;}
 
     /*other special symbols*/
-";" {printf("SEMICOLON"); currPos += yyleng; }
-":" {printf("COLON"); currPos += yyleng; }
-"," {printf("COMMA"); currPos += yyleng; }
-"(" {printf("L_PAREN"); currPos += yyleng; }
+";" {printf("SEMICOLON\n"); currPos += yyleng; }
+":" {printf("COLON\n"); currPos += yyleng; }
+"," {printf("COMMA\n"); currPos += yyleng; }
+"(" {printf("L_PAREN\n"); currPos += yyleng; }
 ")"		{printf("R_PAREN\n"); currPos += yyleng;}
 "["		{printf("L_SQUARE_BRACKET\n"); currPos += yyleng;}
 "]"		{printf("R_SQUARE_BRACKET\n"); currPos += yyleng;}
@@ -70,11 +70,11 @@ DIGIT [0-9]
 
 [\t]+ {/*ignore spaces*/ currPos += yyleng; }
 
-{DIGIT}+	{printf("NUMBER %s", yytext); currPos += yyleng;}
+{DIGIT}+	{printf("NUMBER %s\n", yytext); currPos += yyleng;}
 
 (##).* {/*ignore comments*/ currPos += yyleng;}
 
-/*Error type 2: Invalid Identifier*/
+    /*Error type 2: Invalid Identifier*/
 [0-9_].* {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
 ([a-z]|[A-Z])+([_]?[0-9]?[a-z]?[A-Z]?)*[_]+ {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
 
