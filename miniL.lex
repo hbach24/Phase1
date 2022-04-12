@@ -28,29 +28,53 @@ DIGIT [0-9]
 "endif" {printf("ENDIF\n"); currPos += yyleng; }
 "else" {printf("ELSE\n"); currPos += yyleng; }
 "for" {printf("FOR\n"); currPos += yyleng; }
+"while"		{printf("WHILE\n"); currPos += yyleng;}
+"do"		{printf("DO\n"); currPos += yyleng;}
+"beginloop"	{printf("BEGINLOOP\n"); currPos += yyleng;}
+"endloop"	{printf("ENDLOOP\n"); currPos += yyleng;}
+"continue"	{printf("CONTINUE\n"); currPos += yyleng;}
+"read"		{printf("READ\n"); currPos += yyleng;}
+"write"		{printf("WRITE\n"); currPos += yyleng;}
+"and"		{printf("AND\n"); currPos += yyleng;}
+"or"		{printf("OR\n"); currPos += yyleng;}
+"not"		{printf("NOT\n"); currPos += yyleng;}
+"true"		{printf("TRUE\n"); currPos += yyleng;}
+"false"		{printf("FALSE\n"); currPos += yyleng;}
+"return"	{printf("RETURN\n"); currPos += yyleng;}  
 
     /*arithmetic operators*/
 "-" {printf("SUB\n"); currPos += yyleng; }
 "+" {printf("ADD\n"); currPos += yyleng; }
+"*"		{printf("MULT\n"); currPos += yyleng;}
+"/"		{printf("DIV\n"); currPos += yyleng;}
+"%"		{printf("MOD\n"); currPos += yyleng;}
 
     /*comparison operators*/
 "==" {printf("EQ\n"); currPos += yyleng; }
 "<>" {printf("NEQ\n"); currPos += yyleng; }
 "<"  {printf("LT\n"); currPos += yyleng; }
-   
+">"		{printf("GT\n"); currPos += yyleng;}
+"<="		{printf("LTE\n"); currPos += yyleng;}
+">="		{printf("GTE\n"); currPos += yyleng;}
+
     /*other special symbols*/
 ";" {printf("SEMICOLON"); currPos += yyleng; }
 ":" {printf("COLON"); currPos += yyleng; }
 "," {printf("COMMA"); currPos += yyleng; }
 "(" {printf("L_PAREN"); currPos += yyleng; }
+")"		{printf("R_PAREN\n"); currPos += yyleng;}
+"["		{printf("L_SQUARE_BRACKET\n"); currPos += yyleng;}
+"]"		{printf("R_SQUARE_BRACKET\n"); currPos += yyleng;}
+":="		{printf("ASSIGN\n"); currPos += yyleng;}
+"\n" {currLine++; currPos = 1;}
 
 [\t]+ {/*ignore spaces*/ currPos += yyleng; }
 
-"\n" {currLine++; currPos = 1;}
+{DIGIT}+	{printf("NUMBER %s", yytext); currPos += yyleng;}
 
 (##).* {/*ignore comments*/ currPos += yyleng;}
 
-    /*Error type 2: Invalid Identifier*/
+/*Error type 2: Invalid Identifier*/
 [0-9_].* {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
 ([a-z]|[A-Z])+([_]?[0-9]?[a-z]?[A-Z]?)*[_]+ {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
 
