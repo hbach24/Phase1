@@ -75,7 +75,8 @@ DIGIT [0-9]
 (##).* {/*ignore comments*/ currPos += yyleng;}
 
     /*Error type 2: Invalid Identifier*/
-[0-9_].* {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}
+[0-9_]([a-z]|[A-Z])+([_]?[0-9]?[a-z]?[A-Z]?)* {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n", currLine, currPos, yytext); exit(0);}  
+    
 ([a-z]|[A-Z])+([_]?[0-9]?[a-z]?[A-Z]?)*[_]+ {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n", currLine, currPos, yytext); exit(0);}
 
     /*identifiers & numbers*/
