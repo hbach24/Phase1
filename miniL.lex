@@ -71,7 +71,7 @@ DIGIT [0-9]
 [ \t]+ {/*ignore spaces*/ currPos += yyleng; }
 
 {DIGIT}+	{printf("NUMBER %s\n", yytext); currPos += yyleng;}
-
+    
 (##).* {/*ignore comments*/ currPos += yyleng;}
 
     /*Error type 2: Invalid Identifier*/
